@@ -42,3 +42,9 @@ release has been created, no production documentation has been changed, and no
 public contact has been made. The public source repository exists at
 `alexandroit/stackline-fs-write-stream-atomic`; its corrected head must pass a
 fresh complete CI and CodeQL pair before state advances.
+
+The first artifact-preparation invocation on the green `a5996d9` source failed
+safely at its final `/tmp`-to-workspace rename with `EXDEV`. Cleanup removed the
+disposable stage and no accepted artifact exists. The script now stages beside
+the destination; this tooling-only correction must be remotely green before a
+single accepted artifact is built.

@@ -137,7 +137,10 @@
     "fullAuditKnownVulnerabilities": 0,
     "registrySignaturesVerified": 183,
     "registryAttestationsVerified": 24,
-    "remoteCi": "REPLACEMENT_RUN_REQUIRED_AFTER_THREE_BLOCKED_WINDOWS_GATES",
+    "remoteCi": "PENDING_ON_ARTIFACT_STAGING_FIX_COMMIT",
+    "lastGreenSourceCommit": "a5996d9e2d5b9a82e9a13d6d49686759419a63e6",
+    "lastGreenCiRunId": 33191041322,
+    "lastGreenCodeqlRunId": 33191041321,
     "remoteAttempts": [
       {
         "runId": 33190522361,
@@ -155,7 +158,15 @@
         "reason": "Windows worker collision harness treated characterized losing rename EPERM as an uncaught worker failure"
       }
     ],
-    "immutableArtifact": "NOT_BUILT"
+    "immutableArtifact": "NOT_BUILT",
+    "artifactAttempts": [
+      {
+        "attemptedAt": "2026-08-28T16:41:33Z",
+        "sourceCommit": "a5996d9e2d5b9a82e9a13d6d49686759419a63e6",
+        "result": "NO_ARTIFACT_CREATED",
+        "reason": "Final staged-directory rename crossed filesystems and failed with EXDEV; cleanup removed the disposable stage"
+      }
+    ]
   },
   "userPin": {
     "resolved": false,

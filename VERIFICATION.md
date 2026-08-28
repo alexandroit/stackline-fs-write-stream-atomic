@@ -74,3 +74,15 @@ production documentation, or public contact was created.
   temporary-file leak.
 - None of these red runs authorized an artifact or publication. A fresh full CI and
   CodeQL pair on the corrected commit remains required.
+
+## Artifact staging correction
+
+CI run 33191041322 and CodeQL run 33191041321 passed on source commit
+`a5996d9e2d5b9a82e9a13d6d49686759419a63e6`, with all ten CI jobs successful.
+The first `artifact:prepare` invocation then completed every verification and
+created a disposable staged pack, but its final rename from `/tmp` crossed a
+filesystem boundary and failed with `EXDEV`. The `finally` cleanup removed the
+stage; no `release-candidate`, accepted tarball, checksum set, or SBOM survived,
+and nothing was published. Artifact staging now occurs beside the destination
+so its final promotion is same-filesystem. This tooling correction requires a
+fresh exact-commit CI and CodeQL pair before artifact preparation is retried.

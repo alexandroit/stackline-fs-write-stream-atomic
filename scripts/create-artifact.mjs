@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import crypto from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
-import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -21,7 +20,8 @@ function run(command, arguments_, options = {}) {
 }
 
 run(npm, ['run', 'verify'], { stdio: 'inherit' })
-const temporary = await mkdtemp(path.join(os.tmpdir(), 'stackline-fswsa-artifact-'))
+// Stage beside the destination so the final rename cannot cross filesystems.
+const temporary = await mkdtemp(path.join(root, '.artifact-stage-'))
 const stage = path.join(temporary, 'release-candidate')
 await mkdir(stage)
 
