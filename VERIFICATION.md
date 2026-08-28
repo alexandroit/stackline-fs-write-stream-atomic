@@ -160,6 +160,9 @@ release-candidate or published bytes.
   disclosure and neutral choices, and makes no security claim.
 - Different-repository check: **PASS**. Adoption coverage: **COMPLETE**. No
   unsolicited follow-up is authorized.
+- Closing live observation `2026-08-28T17:18:32Z`: both contacts remained
+  open with no maintainer response; live repository/global deduplication
+  returned only the recorded PR and issue.
 
 The production documentation URL is
 <https://alexandro.net/docs/vanilla/fs-write-stream-atomic/>. Initial source

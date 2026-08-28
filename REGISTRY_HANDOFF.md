@@ -75,6 +75,9 @@ rebuild, replace, or republish version 1.0.0.
   Focused Node.js 24 and TypeScript 6 shape PASS; issue open with zero comments,
   disclosure and neutral options present, no security claim.
 - Different-repository check: `PASS`; adoption coverage: `COMPLETE`.
+- Closing live observation: `2026-08-28T17:18:32Z`; both contacts open with no
+  maintainer response, and live duplicate searches returned only the recorded
+  PR and issue.
 - Do not send an unsolicited follow-up. Respond only to a concrete maintainer
   question with evidence.
 

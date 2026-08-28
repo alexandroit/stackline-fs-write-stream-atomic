@@ -264,7 +264,7 @@
   "adoption": {
     "coverage": "COMPLETE",
     "differentRepositoryCheck": "PASS",
-    "lastObservedAt": "2026-08-28T17:07:31Z",
+    "lastObservedAt": "2026-08-28T17:18:32Z",
     "pullRequest": {
       "url": "https://github.com/Kampfkarren/selene/pull/686",
       "repository": "Kampfkarren/selene",
@@ -291,7 +291,11 @@
       "workflowRunCount": 4,
       "workflowState": "ACTION_REQUIRED",
       "workflowJobsCreated": 0,
-      "classification": "PENDING_MAINTAINER_APPROVAL_NOT_CHANGED_TREE_FAILURE"
+      "classification": "PENDING_MAINTAINER_APPROVAL_NOT_CHANGED_TREE_FAILURE",
+      "comments": 0,
+      "reviews": 0,
+      "maintainerQuestions": 0,
+      "liveDuplicateSearch": "ONLY_RECORDED_CONTACT"
     },
     "maintainerDecisionIssue": {
       "url": "https://github.com/vladimiry/ElectronMail/issues/782",
@@ -311,7 +315,9 @@
       "focusedNode24TypeScript6Shape": "PASS",
       "maintainerDisclosure": "PRESENT",
       "neutralOptions": true,
-      "securityClaim": false
+      "securityClaim": false,
+      "maintainerQuestions": 0,
+      "liveDuplicateSearch": "ONLY_RECORDED_CONTACT"
     },
     "unsolicitedFollowup": false
   },

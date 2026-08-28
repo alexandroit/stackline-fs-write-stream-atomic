@@ -90,6 +90,11 @@ The different-repository check passes and adoption coverage is complete. Do
 not follow up unsolicited; respond only to a concrete maintainer question with
 evidence.
 
+The closing live reconciliation at 2026-08-28T17:18:32Z found both contacts
+open with no maintainer response. Selene remained mergeable and blocked only
+on workflow approval with zero instantiated jobs; live duplicate searches
+returned only the recorded PR and issue.
+
 ## Documentation record
 
 Production documentation is at

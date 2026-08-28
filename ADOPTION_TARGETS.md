@@ -25,6 +25,11 @@ Four repository workflow runs report `action_required` and created no jobs
 while waiting for a maintainer to approve fork-contributor execution. This is
 an external approval gate, not a changed-tree test failure.
 
+The closing live read at 2026-08-28T17:18:32Z found the PR open, non-draft,
+mergeable and blocked only on repository policy, with zero comments, reviews,
+review threads or maintainer questions. Repository, author/involvement and
+exact-package searches each returned only this contact.
+
 ## Maintainer-decision issue — OPEN
 
 The different-repository issue is
@@ -41,6 +46,10 @@ the independent Stackline package and is not affiliated with ElectronMail or
 the original package maintainers. It offers aliasing, vendoring or another
 contract-tested implementation, and intentional retention as neutral choices;
 it makes no security claim.
+
+The closing live read at 2026-08-28T17:18:32Z still found the issue open and
+unlocked with zero comments or maintainer questions. Repository,
+author/involvement and exact-package searches each returned only this contact.
 
 ## Coverage
 
