@@ -65,5 +65,12 @@ production documentation, or public contact was created.
   directory import in the shipped example did not execute from the installed
   tarball; both examples now use the package self-reference, and the packed
   smoke gate executes them directly.
-- Neither red run authorized an artifact or publication. A fresh full CI and
+- Corrected CI run 33190920799 passed the full Windows contract, including the
+  cleanup regression, and its large-writer stress case. Its separate worker
+  collision harness still treated an upstream-compatible losing Windows
+  rename `EPERM` as an uncaught worker failure. The harness now records those
+  characterized losers while requiring unique adjacent names, successful
+  worker closure, at least one publisher, one whole final value, and no
+  temporary-file leak.
+- None of these red runs authorized an artifact or publication. A fresh full CI and
   CodeQL pair on the corrected commit remains required.

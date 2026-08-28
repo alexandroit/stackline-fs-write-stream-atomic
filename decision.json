@@ -137,7 +137,7 @@
     "fullAuditKnownVulnerabilities": 0,
     "registrySignaturesVerified": 183,
     "registryAttestationsVerified": 24,
-    "remoteCi": "REPLACEMENT_RUN_REQUIRED_AFTER_TWO_BLOCKED_WINDOWS_GATES",
+    "remoteCi": "REPLACEMENT_RUN_REQUIRED_AFTER_THREE_BLOCKED_WINDOWS_GATES",
     "remoteAttempts": [
       {
         "runId": 33190522361,
@@ -148,6 +148,11 @@
         "runId": 33190637929,
         "result": "BLOCKED",
         "reason": "Windows exposed a missing-target hash/unlink cleanup race; packed consumers exposed a shipped ESM directory import"
+      },
+      {
+        "runId": 33190920799,
+        "result": "BLOCKED",
+        "reason": "Windows worker collision harness treated characterized losing rename EPERM as an uncaught worker failure"
       }
     ],
     "immutableArtifact": "NOT_BUILT"

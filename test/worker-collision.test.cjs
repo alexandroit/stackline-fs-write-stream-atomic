@@ -11,7 +11,9 @@ if (!isMainThread) {
   const createWriteStreamAtomic = require(workerData.modulePath)
   const stream = createWriteStreamAtomic(workerData.target)
   parentPort.postMessage({ temporary: stream.__atomicTmp, threadId })
-  stream.on('error', (error) => { throw error })
+  stream.on('error', (error) => parentPort.postMessage({
+    error: { code: error.code, syscall: error.syscall }
+  }))
   stream.on('close', () => parentPort.postMessage({ complete: true }))
   stream.end(`${workerData.marker}:` + workerData.marker.repeat(4096))
 } else {
@@ -37,6 +39,19 @@ if (!isMainThread) {
     for (const report of opened) {
       assert.ok(report.temporary.includes(`-${report.threadId}-`))
       assert.equal(path.dirname(report.temporary), directory)
+    }
+    assert.ok(reports.every((messages) => messages.some((message) => message.complete)))
+    const failures = reports
+      .map((messages) => messages.find((message) => message.error))
+      .filter(Boolean)
+    if (process.platform === 'win32') {
+      assert.ok(reports.some((messages) => !messages.some((message) => message.error)))
+      for (const failure of failures) {
+        assert.equal(failure.error.code, 'EPERM')
+        assert.equal(failure.error.syscall, 'rename')
+      }
+    } else {
+      assert.deepEqual(failures, [])
     }
     const actual = fs.readFileSync(target, 'utf8')
     const marker = actual.slice(0, 1)
