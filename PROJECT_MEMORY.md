@@ -25,16 +25,20 @@ browser or crash-durability claim.
 
 ## Current state
 
-The complete local source/package gate passed at 2026-08-28T16:30:53Z. It
+The complete local source/package gate passed at 2026-08-28T16:37:38Z. It
 covers the immutable 1.0.10 differential, 19 Node test subtests, slow-close and
 destroy/error cleanup, worker contention, CJS/ESM, TypeScript 3.9/current,
 packed scoped and historical-key consumers, exact Node.js 14.15.1 through
-24.7.0, package quality, licenses, audits, and signatures. Coverage is 94.17%
-statements/lines, 82.02% branches, and 100% functions.
+24.7.0, package quality, licenses, audits, and signatures. Coverage is 92.90%
+statements/lines, 80.45% branches, and 100% functions. Two blocked remote runs
+corrected Windows concurrency characterization, a Windows hash/unlink cleanup
+race, and execution of the shipped ESM example; the replacement remote matrix
+has not yet run.
 
 State remains `BUILDING`. Remote CI and CodeQL have not run, and the immutable
 artifact is intentionally not built: it must be produced once from the exact
 remote-green commit. Nothing has been published to Verdaccio or npm, no GitHub
-project/release has been created, no production documentation has been changed,
-and no public contact has been made. Do not advance state without the remaining
-authorized remote gates.
+release has been created, no production documentation has been changed, and no
+public contact has been made. The public source repository exists at
+`alexandroit/stackline-fs-write-stream-atomic`; its corrected head must pass a
+fresh complete CI and CodeQL pair before state advances.

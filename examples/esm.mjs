@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import createWriteStreamAtomic from '..'
+import createWriteStreamAtomic from '@stackline/fs-write-stream-atomic'
 
 const target = process.argv[2]
 if (!target) throw new Error('Usage: node examples/esm.mjs TARGET')

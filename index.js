@@ -44,37 +44,27 @@ function getTmpname(filename) {
 function hashFile(filename, callback) {
   const hash = crypto.createHash('sha512')
   const input = fs.createReadStream(filename)
+  let digest
+  let error
+
   input.on('data', (chunk) => hash.update(chunk))
-  input.once('error', callback)
-  input.once('end', () => callback(null, hash.digest('hex')))
+  input.once('error', (value) => { error = value })
+  input.once('end', () => { digest = hash.digest('hex') })
+  // Wait for the descriptor to close before allowing cleanup. On Windows an
+  // early hash error followed by unlink can otherwise leave the sibling
+  // temporary file behind while the other hash stream still owns it.
+  input.once('close', () => callback(error, digest))
 }
 
 function filesMatch(left, right, callback) {
-  let leftHash
-  let rightHash
-  let pending = 2
-  let settled = false
-
-  function complete(error) {
-    if (settled) return
+  hashFile(left, (error, digest) => {
     if (error) {
-      settled = true
       callback(error)
       return
     }
-    if (--pending === 0) {
-      settled = true
-      callback(null, leftHash === rightHash)
-    }
-  }
-
-  hashFile(left, (error, digest) => {
-    leftHash = digest
-    complete(error)
-  })
-  hashFile(right, (error, digest) => {
-    rightHash = digest
-    complete(error)
+    hashFile(right, (rightError, rightDigest) => {
+      callback(rightError, !rightError && digest === rightDigest)
+    })
   })
 }
 

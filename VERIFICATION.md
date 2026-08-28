@@ -19,7 +19,7 @@ Observed 2026-08-28 in the local package workspace.
 
 ## 2026-08-28 local gate
 
-`npm run verify` completed successfully at 2026-08-28T16:30:53Z:
+`npm run verify` completed successfully at 2026-08-28T16:37:38Z:
 
 - 4 upstream-style subtests and one differential suite covering default,
   encoding/high-water-mark, mode, and append behavior passed against the exact
@@ -33,11 +33,11 @@ Observed 2026-08-28 in the local package workspace.
 - ESM default/named identity and TypeScript 3.9/current declarations passed.
 - Runtime probes passed on exact Node.js 14.15.1, 16.20.2, 18.20.8, 20.20.2,
   22.22.0, and 24.7.0.
-- The 17-subtest coverage gate measured 94.17% statements/lines, 82.02%
+- The 17-subtest coverage gate measured 92.90% statements/lines, 80.45%
   branches, and 100% functions.
 - Clean packed scoped and historical-key consumers passed for CommonJS, ESM,
-  extensionless `index`, `index.js`, mode, lifecycle, and the exact production
-  tree.
+  extensionless `index`, `index.js`, shipped CommonJS/ESM examples, mode,
+  lifecycle, and the exact production tree.
 - `publint` reported all good. Are the Types Wrong reported no problems for
   root, `index`, `index.js`, and `package.json` under Node 10/16 and bundler
   resolution profiles.
@@ -47,7 +47,23 @@ Observed 2026-08-28 in the local package workspace.
 - Production and full npm audits found zero known vulnerabilities. All 183
   installed registry packages had verified signatures; 24 had attestations.
 
-This is source/package verification only. Cross-platform workflow definitions
-are checked in, but remote Linux/macOS/Windows CI and CodeQL have not run. No
-immutable tarball, checksum set, SBOM, registry publication, repository,
-release, production documentation, or public contact was created.
+This is source/package verification only. Cross-platform workflows have run,
+but the corrected commit still requires a complete green replacement matrix.
+No immutable tarball, checksum set, SBOM, registry publication, release,
+production documentation, or public contact was created.
+
+## Pre-publication remote corrections
+
+- Initial CI run 33190522361 exposed an over-strict Windows concurrency test:
+  upstream-compatible losing rename operations may report `EPERM` when their
+  bytes differ from the winning writer. The assertion now requires one whole
+  winner and accepts only that characterized Windows rename error.
+- Replacement CI run 33190637929 then exposed a real missing-target cleanup
+  race: a parallel hash stream still held the temporary file when Windows
+  attempted unlink. Hash comparison is now sequential and waits for each file
+  descriptor to close before cleanup. The same run showed that a relative ESM
+  directory import in the shipped example did not execute from the installed
+  tarball; both examples now use the package self-reference, and the packed
+  smoke gate executes them directly.
+- Neither red run authorized an artifact or publication. A fresh full CI and
+  CodeQL pair on the corrected commit remains required.

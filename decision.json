@@ -118,14 +118,14 @@
   ],
   "verification": {
     "localGate": "PASS",
-    "verifiedAt": "2026-08-28T16:30:53Z",
+    "verifiedAt": "2026-08-28T16:37:38Z",
     "nodeTestSubtests": 19,
     "differentialCases": 4,
     "coverage": {
-      "statements": 94.17,
-      "branches": 82.02,
+      "statements": 92.9,
+      "branches": 80.45,
       "functions": 100,
-      "lines": 94.17,
+      "lines": 92.9,
       "coveredSubtests": 17
     },
     "runtimes": ["14.15.1", "16.20.2", "18.20.8", "20.20.2", "22.22.0", "24.7.0"],
@@ -137,7 +137,19 @@
     "fullAuditKnownVulnerabilities": 0,
     "registrySignaturesVerified": 183,
     "registryAttestationsVerified": 24,
-    "remoteCi": "NOT_RUN",
+    "remoteCi": "REPLACEMENT_RUN_REQUIRED_AFTER_TWO_BLOCKED_WINDOWS_GATES",
+    "remoteAttempts": [
+      {
+        "runId": 33190522361,
+        "result": "BLOCKED",
+        "reason": "Windows exposed an over-strict all-writers-succeed concurrency assertion"
+      },
+      {
+        "runId": 33190637929,
+        "result": "BLOCKED",
+        "reason": "Windows exposed a missing-target hash/unlink cleanup race; packed consumers exposed a shipped ESM directory import"
+      }
+    ],
     "immutableArtifact": "NOT_BUILT"
   },
   "userPin": {

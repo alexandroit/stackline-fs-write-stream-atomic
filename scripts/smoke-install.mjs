@@ -76,6 +76,18 @@ stream.end('packed ESM')
   run(process.execPath, ['commonjs.cjs'], consumer, 'inherit')
   run(process.execPath, ['module.mjs'], consumer, 'inherit')
 
+  const installedRoot = path.join(
+    consumer, 'node_modules', '@stackline', 'fs-write-stream-atomic'
+  )
+  run(process.execPath, [
+    path.join(installedRoot, 'examples', 'commonjs.cjs'),
+    path.join(consumer, 'installed-example-commonjs.txt')
+  ], consumer, 'inherit')
+  run(process.execPath, [
+    path.join(installedRoot, 'examples', 'esm.mjs'),
+    path.join(consumer, 'installed-example-esm.txt')
+  ], consumer, 'inherit')
+
   const installed = JSON.parse(await readFile(path.join(
     consumer, 'node_modules', '@stackline', 'fs-write-stream-atomic', 'package.json'
   ), 'utf8'))

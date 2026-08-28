@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs')
-const createWriteStreamAtomic = require('..')
+const createWriteStreamAtomic = require('@stackline/fs-write-stream-atomic')
 
 const target = process.argv[2]
 if (!target) throw new Error('Usage: node examples/commonjs.cjs TARGET')
