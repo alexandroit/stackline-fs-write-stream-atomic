@@ -27,7 +27,16 @@ test('many contending large writers leave one complete result and no temporary f
   })
 
   const outcomes = await Promise.all(completions)
-  assert.ok(outcomes.every((result) => result.error === null))
+  if (process.platform === 'win32') {
+    assert.ok(outcomes.some((result) => result.error === null))
+    for (const result of outcomes) {
+      if (!result.error) continue
+      assert.equal(result.error.code, 'EPERM')
+      assert.equal(result.error.syscall, 'rename')
+    }
+  } else {
+    assert.ok(outcomes.every((result) => result.error === null))
+  }
   const actual = fs.readFileSync(target, 'utf8')
   const winner = actual.slice(0, 2)
   assert.equal(actual, results.get(winner))

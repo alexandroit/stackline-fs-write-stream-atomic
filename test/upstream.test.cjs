@@ -64,7 +64,20 @@ test('concurrent streams publish one complete winner without interleaving', asyn
   })
 
   const results = await Promise.all(streams)
-  assert.ok(results.every((result) => result.error === null))
+  if (process.platform === 'win32') {
+    // Windows can reject losing concurrent replace operations with rename
+    // EPERM. Upstream 1.0.10 preserves that error unless the target already
+    // contains the same bytes, so require one successful publisher and only
+    // the characterized rename failure for the other complete writers.
+    assert.ok(results.some((result) => result.error === null))
+    for (const result of results) {
+      if (!result.error) continue
+      assert.equal(result.error.code, 'EPERM')
+      assert.equal(result.error.syscall, 'rename')
+    }
+  } else {
+    assert.ok(results.every((result) => result.error === null))
+  }
   const lines = fs.readFileSync(target, 'utf8').trim().split('\n')
   const winner = lines[0].split(' ')[1]
   assert.deepEqual(lines, [`first ${winner}`, `second ${winner}`, `third ${winner}`])
