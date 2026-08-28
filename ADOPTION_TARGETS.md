@@ -1,17 +1,55 @@
 # Adoption Targets
 
-Research-only record as of 2026-08-28. No project was contacted and no change
-was proposed.
+Observation date: 2026-08-28.
 
-- `vladimiry/ElectronMail`: exact 1.0.10, active constructor/backpressure and
-  finish use on Node 24.
-- `Kampfkarren/selene`: `^1.0.10`, active executable download using mode 0755
-  and finish.
-- `mjeanroy/bower-npm-resolver`: exact 1.0.10 tarball stream and close in the
-  inspected source; supplemental only because the default-branch head is from
-  2023 despite a 2026 repository push timestamp.
+This is a dated compatibility and contact record, not evidence of maintainer
+approval. `@stackline/fs-write-stream-atomic@1.0.0` is publicly verified.
 
-These repositories establish direct use for the intake gate. They are not
-pre-approved adoption targets. Any future proposal requires current policy,
-deduplication, clean baseline, exact alias change, full relevant tests, and
-separate authorization for public contact.
+## Pull request lane — OPEN
+
+The focused migration pull request is
+<https://github.com/Kampfkarren/selene/pull/686>. It targets
+`Kampfkarren/selene` base commit
+`9d531b8d3755e139b26c534914e252239014bb3d` from head commit
+`a94cbb8f0e3d837f704fa2100c7d66062a453d19`. The changed tree contains only
+`selene-vscode/package.json` and `selene-vscode/package-lock.json`; the exact
+historical-key alias is
+`fs-write-stream-atomic: npm:@stackline/fs-write-stream-atomic@1.0.0`.
+
+Clean baseline and changed-tree installs, compilation, ESLint, Prettier, alias
+resolution, CommonJS root and deep-entry loading, and atomic commit/temporary
+cleanup checks all passed. The audit remained at the same 23 existing findings
+before and after the migration.
+
+Four repository workflow runs report `action_required` and created no jobs
+while waiting for a maintainer to approve fork-contributor execution. This is
+an external approval gate, not a changed-tree test failure.
+
+## Maintainer-decision issue — OPEN
+
+The different-repository issue is
+<https://github.com/vladimiry/ElectronMail/issues/782>, based on ElectronMail
+commit `a7a2c71548ef71cf2060a3b4114be62ea4be8d4d`. It identifies the exact
+`fs-write-stream-atomic@1.0.10` `devDependencies` entry in `package.json` and
+the newable constructor use in
+`src/electron-main/database/serialization/util.ts`. A focused Node.js 24 and
+TypeScript 6 smoke matching that constructor, binary encoding, high-water-mark,
+and lifecycle shape passed.
+
+The issue is open with zero comments. It discloses that the proposer maintains
+the independent Stackline package and is not affiliated with ElectronMail or
+the original package maintainers. It offers aliasing, vendoring or another
+contract-tested implementation, and intentional retention as neutral choices;
+it makes no security claim.
+
+## Coverage
+
+The pull request and issue target different repositories: **PASS**. The required
+one-PR/one-issue adoption coverage is **COMPLETE**. Do not send an unsolicited
+follow-up; monitor and respond only to a concrete maintainer question with
+evidence.
+
+## Canonical record
+
+Canonical Drive adoption record: `1nq_KJTlKLYlat8pLeiCdpIsq89bu22-i`,
+<https://drive.google.com/file/d/1nq_KJTlKLYlat8pLeiCdpIsq89bu22-i/view>.

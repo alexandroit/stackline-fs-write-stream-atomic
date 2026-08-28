@@ -3,7 +3,7 @@ import crypto from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const destination = path.join(root, 'release-candidate')
@@ -17,6 +17,90 @@ function run(command, arguments_, options = {}) {
     stdio: ['ignore', 'pipe', 'pipe'],
     ...options
   })
+}
+
+async function createProductionSbom(metadata, archive, temporary) {
+  const consumer = path.join(temporary, 'sbom-consumer')
+  await mkdir(consumer)
+  await writeFile(path.join(consumer, 'package.json'), JSON.stringify({
+    name: 'stackline-fs-write-stream-atomic-sbom-consumer',
+    version: '0.0.0',
+    private: true,
+    dependencies: {
+      [metadata.name]: pathToFileURL(archive).href
+    }
+  }, null, 2) + '\n')
+
+  run(npm, [
+    'install',
+    '--ignore-scripts',
+    '--omit=dev',
+    '--no-audit',
+    '--no-fund'
+  ], { cwd: consumer })
+
+  const installedPackage = JSON.parse(await readFile(path.join(
+    consumer,
+    'node_modules',
+    ...metadata.name.split('/'),
+    'package.json'
+  ), 'utf8'))
+  const installedGracefulFs = JSON.parse(await readFile(path.join(
+    consumer,
+    'node_modules',
+    'graceful-fs',
+    'package.json'
+  ), 'utf8'))
+  assert.deepEqual(installedPackage.dependencies, { 'graceful-fs': '4.2.11' })
+  assert.equal(installedGracefulFs.version, '4.2.11')
+  assert.equal(installedGracefulFs.license, 'ISC')
+
+  const productionTree = JSON.parse(run(npm, [
+    'ls',
+    '--omit=dev',
+    '--all',
+    '--json'
+  ], { cwd: consumer }))
+  assert.equal(productionTree.problems, undefined)
+
+  const consumerSbom = JSON.parse(run(npm, [
+    'sbom',
+    '--omit=dev',
+    '--sbom-format=cyclonedx'
+  ], { cwd: consumer }))
+  const targetRef = `${metadata.name}@${metadata.version}`
+  const targetComponent = consumerSbom.components.find((component) => component['bom-ref'] === targetRef)
+  const gracefulFsComponent = consumerSbom.components.find((component) => (
+    component.name === 'graceful-fs' && component.version === '4.2.11'
+  ))
+  assert.ok(targetComponent, `SBOM must contain ${targetRef}`)
+  assert.ok(gracefulFsComponent, 'SBOM must contain graceful-fs@4.2.11')
+
+  const dependencyByRef = new Map(consumerSbom.dependencies.map((entry) => [entry.ref, entry]))
+  const targetEdge = dependencyByRef.get(targetRef)
+  assert.ok(targetEdge, `SBOM must contain a dependency edge for ${targetRef}`)
+  assert.ok(
+    targetEdge.dependsOn.includes(gracefulFsComponent['bom-ref']),
+    `${targetRef} must depend on ${gracefulFsComponent['bom-ref']}`
+  )
+
+  const reachable = new Set()
+  const visit = (reference) => {
+    if (reachable.has(reference)) return
+    reachable.add(reference)
+    const edge = dependencyByRef.get(reference)
+    if (edge) edge.dependsOn.forEach(visit)
+  }
+  visit(targetRef)
+
+  return {
+    ...consumerSbom,
+    metadata: { ...consumerSbom.metadata, component: targetComponent },
+    components: consumerSbom.components.filter((component) => (
+      component['bom-ref'] !== targetRef && reachable.has(component['bom-ref'])
+    )),
+    dependencies: consumerSbom.dependencies.filter((entry) => reachable.has(entry.ref))
+  }
 }
 
 run(npm, ['run', 'verify'], { stdio: 'inherit' })
@@ -65,9 +149,8 @@ try {
   await writeFile(path.join(stage, 'SHA1SUMS'), `${digests.sha1}  ${record.filename}\n`)
   await writeFile(path.join(stage, 'SHA256SUMS'), `${digests.sha256}  ${record.filename}\n`)
   await writeFile(path.join(stage, 'SHA512SUMS'), `${digests.sha512}  ${record.filename}\n`)
-  const sbom = run(npm, ['sbom', '--omit=dev', '--sbom-format=cyclonedx'])
-  JSON.parse(sbom)
-  await writeFile(path.join(stage, 'sbom.cdx.json'), sbom.endsWith('\n') ? sbom : `${sbom}\n`)
+  const sbom = await createProductionSbom(metadata, archive, temporary)
+  await writeFile(path.join(stage, 'sbom.cdx.json'), JSON.stringify(sbom, null, 2) + '\n')
 
   await rm(destination, { force: true, recursive: true })
   await rename(stage, destination)
