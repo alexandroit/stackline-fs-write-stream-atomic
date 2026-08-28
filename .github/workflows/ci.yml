@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['stackline-v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Tests, types, coverage, and package quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm install --global npm@10.8.2
+      - run: npm ci
+      - run: npm run verify
+
+  package:
+    name: Packed production artifact
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm install --global npm@10.8.2
+      - run: npm ci
+      - run: mkdir artifact
+      - run: npm pack --ignore-scripts --pack-destination artifact
+      - run: sha512sum artifact/*.tgz > artifact/SHA512SUMS
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: npm-package
+          path: artifact/
+          if-no-files-found: error
+          retention-days: 14
+
+  exact-old-node:
+    name: Exact Node.js 14.15.1 packed consumer
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 14.15.1
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: artifact
+      - run: mkdir consumer && cd consumer && npm init --yes
+      - run: npm install --production --ignore-scripts --no-audit --no-fund ../artifact/*.tgz
+        working-directory: consumer
+      - name: Exercise callable/newable CommonJS and lifecycle
+        working-directory: consumer
+        run: >-
+          node -e "var fs=require('fs');
+          var create=require('@stackline/fs-write-stream-atomic');
+          var stream=new create('target',{mode:384});
+          stream.on('error',function(error){throw error});
+          stream.on('close',function(){if(fs.readFileSync('target','utf8')!=='ok')process.exit(1)});
+          stream.end('ok')"
+
+  supported-runtime:
+    name: Node.js ${{ matrix.node }} packed consumer
+    needs: package
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [16.20.2, 18.20.8, 20.20.2, 22, 24]
+    steps:
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: artifact
+      - run: mkdir consumer && cd consumer && npm init --yes
+      - run: npm install --omit=dev --ignore-scripts --no-audit --no-fund ../artifact/*.tgz
+        working-directory: consumer
+      - run: node node_modules/@stackline/fs-write-stream-atomic/examples/commonjs.cjs cjs-output
+        working-directory: consumer
+      - run: node node_modules/@stackline/fs-write-stream-atomic/examples/esm.mjs esm-output
+        working-directory: consumer
+
+  platform:
+    name: ${{ matrix.os }} filesystem lifecycle
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 20.20.2
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:upstream
+      - run: npm run test:contract
+      - run: npm run test:stress
+      - run: npm run test:esm

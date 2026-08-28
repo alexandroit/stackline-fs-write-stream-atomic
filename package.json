@@ -1,0 +1,115 @@
+{
+  "name": "@stackline/fs-write-stream-atomic",
+  "version": "1.0.0",
+  "description": "Compatibility-first atomic filesystem Writable streams with maintained lifecycle handling and first-party types",
+  "type": "commonjs",
+  "sideEffects": false,
+  "main": "./index.js",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./index": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./index.js": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.cts",
+    "index.d.mts",
+    "examples",
+    "CHANGELOG.md",
+    "COMPATIBILITY_CONTRACT.md",
+    "LICENSE",
+    "MIGRATION.md",
+    "NOTICE",
+    "README.md",
+    "SECURITY.md",
+    "THIRD_PARTY_LICENSES.md"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "node scripts/build.mjs",
+    "lint": "eslint index.js index.mjs scripts test examples",
+    "test:upstream": "node --test test/upstream.test.cjs",
+    "test:differential": "node --test test/differential.test.cjs",
+    "test:contract": "node --test test/contract.test.cjs test/error-cleanup.test.cjs test/windows-eperm.test.cjs",
+    "test:stress": "node --test test/stress.test.cjs test/worker-collision.test.cjs",
+    "test:esm": "node test/esm.mjs",
+    "test:types": "node node_modules/typescript-3-9/bin/tsc -p test/types/tsconfig.legacy.json && node node_modules/typescript/bin/tsc -p test/types/tsconfig.modern.json",
+    "test:runtime": "node scripts/check-runtime.mjs",
+    "test": "npm run test:upstream && npm run test:differential && npm run test:contract && npm run test:stress && npm run test:esm && npm run test:types && npm run test:runtime",
+    "test:coverage": "c8 --all --include=index.js --check-coverage --lines 85 --functions 85 --branches 75 node --test test/upstream.test.cjs test/contract.test.cjs test/error-cleanup.test.cjs test/windows-eperm.test.cjs test/stress.test.cjs",
+    "test:smoke": "node scripts/smoke-install.mjs",
+    "check:package": "publint && attw --pack .",
+    "check:licenses": "node scripts/check-licenses.mjs",
+    "check:release": "node scripts/check-release-metadata.mjs",
+    "pack:check": "npm pack --dry-run",
+    "artifact:prepare": "node scripts/create-artifact.mjs",
+    "audit:dependencies": "npm audit --omit=dev --audit-level=low",
+    "audit:all": "npm audit --audit-level=low",
+    "audit:signatures": "npm audit signatures",
+    "verify": "npm run clean && npm run lint && npm run build && npm test && npm run test:coverage && npm run test:smoke && npm run check:package && npm run check:release && npm run pack:check && npm run check:licenses && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=14.15.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandroit/stackline-fs-write-stream-atomic.git"
+  },
+  "homepage": "https://alexandro.net/docs/vanilla/fs-write-stream-atomic/",
+  "bugs": {
+    "url": "https://github.com/alexandroit/stackline-fs-write-stream-atomic/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": ["atomic", "filesystem", "stream", "writable"],
+  "author": "Stackline Maintainers",
+  "license": "ISC",
+  "dependencies": {
+    "graceful-fs": "4.2.11"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@eslint/js": "10.0.1",
+    "@types/node": "14.18.63",
+    "c8": "12.0.0",
+    "eslint": "10.9.1",
+    "fs-write-stream-atomic-upstream": "npm:fs-write-stream-atomic@1.0.10",
+    "publint": "0.3.24",
+    "typescript": "7.0.2",
+    "typescript-3-9": "npm:typescript@3.9.10"
+  }
+}

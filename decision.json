@@ -1,0 +1,162 @@
+{
+  "schema": "stackline-package-decision-v1",
+  "package": "fs-write-stream-atomic",
+  "target": "@stackline/fs-write-stream-atomic",
+  "selectedQueueRank": 1,
+  "selectedByUserPin": false,
+  "observationDate": "2026-08-28",
+  "decidedAt": "2026-08-28T16:17:06Z",
+  "transition": "CODEX_READY -> RESEARCHING -> BUILDING",
+  "canonicalState": "BUILDING",
+  "decision": "GO",
+  "reasonCode": "ACTIVE_STREAMING_USE_ARCHIVED_UPSTREAM_NO_MAINTAINED_DROP_IN",
+  "reason": "The explicitly unsupported archived package has current direct streaming use, a bounded compatibility surface, lifecycle and worker-thread hardening opportunities, and no maintained successor that preserves its callable Writable contract.",
+  "upstream": {
+    "version": "1.0.10",
+    "publishedAt": "2017-03-07T22:23:19.124Z",
+    "registryModifiedAt": "2026-07-06T13:58:55.472Z",
+    "deprecated": "This package is no longer supported.",
+    "repository": "https://github.com/npm/fs-write-stream-atomic",
+    "repositoryArchived": true,
+    "repositoryLastCommit": "00e9d75241d60db9c66353e092696000e7bcde2a",
+    "releaseCommit": "de157c0373a40fb5539640923cab9671cef08b12",
+    "license": "ISC",
+    "currentNpmWriteMaintainers": ["saquibkhan", "npm-cli-ops", "reggi"],
+    "dependencies": {
+      "graceful-fs": "^4.1.2",
+      "iferr": "^0.1.5",
+      "imurmurhash": "^0.1.4",
+      "readable-stream": "1 || 2"
+    },
+    "issuesReviewed": [
+      "https://github.com/npm/fs-write-stream-atomic/issues/1",
+      "https://github.com/npm/fs-write-stream-atomic/issues/12",
+      "https://github.com/npm/fs-write-stream-atomic/issues/16",
+      "https://github.com/npm/fs-write-stream-atomic/issues/17"
+    ],
+    "pullRequestsReviewed": [
+      "https://github.com/npm/fs-write-stream-atomic/pull/7",
+      "https://github.com/npm/fs-write-stream-atomic/pull/9",
+      "https://github.com/npm/fs-write-stream-atomic/pull/13",
+      "https://github.com/npm/fs-write-stream-atomic/pull/14",
+      "https://github.com/npm/fs-write-stream-atomic/pull/18",
+      "https://github.com/npm/fs-write-stream-atomic/pull/22",
+      "https://github.com/npm/fs-write-stream-atomic/pull/24"
+    ]
+  },
+  "downloads": {
+    "count": 3530843,
+    "period": "2026-08-21:2026-08-27",
+    "observedAt": "2026-08-28T16:16:58Z",
+    "source": "https://api.npmjs.org/downloads/point/2026-08-21:2026-08-27/fs-write-stream-atomic",
+    "queueSnapshotCount": 2927014,
+    "mutableObservation": true,
+    "proofOfDirectUse": false
+  },
+  "tarball": {
+    "url": "https://registry.npmjs.org/fs-write-stream-atomic/-/fs-write-stream-atomic-1.0.10.tgz",
+    "sha1": "b47df53493ef911df75731e70a9ded0189db40c9",
+    "sha256": "58cc72e8b57c5c6bdacc71b264fd0d1f2ae435b11d4ee6134d7fbfaf3bd0b0c6",
+    "integrity": "sha512-gehEzmPn2nAwr39eay+x3X34Ra+M2QlVUTLhkXPjWdeO8RF9kszk116avgBJM3ZyNHgHXBNx+VmPaFC36k0PzA=="
+  },
+  "directUse": [
+    {
+      "repository": "vladimiry/ElectronMail",
+      "sourceCommit": "a7a2c71548ef71cf2060a3b4114be62ea4be8d4d",
+      "lastPush": "2026-07-14T06:05:22Z",
+      "proof": "Exact 1.0.10 declaration and a constructor call using binary encoding, a 1 MiB highWaterMark, write callbacks, drain, and finish as the publication boundary."
+    },
+    {
+      "repository": "Kampfkarren/selene",
+      "sourceCommit": "9d531b8d3755e139b26c534914e252239014bb3d",
+      "lastPush": "2026-05-21T02:45:42Z",
+      "proof": "Direct ^1.0.10 declaration and executable download stream using mode 0755 and finish completion."
+    },
+    {
+      "repository": "mjeanroy/bower-npm-resolver",
+      "sourceCommit": "42e51b0e4bdf3e38044b432fa5952911a1799908",
+      "lastPush": "2026-04-02T05:40:11Z",
+      "defaultBranchHeadDate": "2023-05-19",
+      "classification": "SUPPLEMENTAL_SOURCE_USE_NOT_CURRENT_DEFAULT_BRANCH_MAINTENANCE",
+      "proof": "Exact 1.0.10 declaration and tarball pipe whose completion is observed through close; the 2026 repository push does not make the 2023 default-branch head current maintenance evidence."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "write-file-atomic",
+      "version": "8.0.0",
+      "repository": "https://github.com/npm/write-file-atomic",
+      "assessment": "Actively maintained and more durable, but accepts whole strings or buffers rather than a Writable stream and is not a drop-in replacement."
+    },
+    {
+      "name": "@trenskow/atomic-write-stream",
+      "version": "0.1.29",
+      "repository": "https://github.com/trenskow/atomic-write-stream",
+      "registry": "https://registry.npmjs.org/%40trenskow%2Fatomic-write-stream/0.1.29",
+      "assessment": "Current ESM-only alternative with a different constructor and lifecycle surface and no effective automated test gate."
+    },
+    {
+      "name": "@parcel/fs-write-stream-atomic",
+      "version": "2.6.0",
+      "repository": "https://github.com/parcel-bundler/parcel/tree/v2/packages/utils/fs-write-stream-atomic",
+      "assessment": "Closest API fork and includes worker-thread identity, but last published in 2022 and embedded in the Parcel monorepo rather than maintained as a current standalone successor."
+    },
+    {
+      "name": "node:fs",
+      "assessment": "createWriteStream is not atomic; writeFile is a whole-value convenience and does not preserve the streaming API."
+    }
+  ],
+  "acceptanceCriteria": [
+    "Preserve callable and newable CommonJS use, Writable backpressure, callbacks, and open/finish/close ordering",
+    "Preserve documented string paths, encoding, mode, flags, highWaterMark, chown, adjacent temporary files, and complete-winner concurrency",
+    "Characterize append flags as replacement semantics rather than silently presenting target append behavior",
+    "Preserve the Windows rename EPERM same-content comparison while rejecting different-content failures",
+    "Clean temporary files on explicit destroy and destination errors; document that callers must use pipeline or destroy for source errors",
+    "Prevent worker-thread and process-local temporary-name collisions with exclusive creation",
+    "Pass differential 1.0.10, CJS, ESM, TypeScript 3.9/current, scoped and historical-key packed consumers",
+    "Pass Node 14.15.1 through current Node, Windows/macOS filesystem CI, coverage, package-quality, license, and audit gates"
+  ],
+  "verification": {
+    "localGate": "PASS",
+    "verifiedAt": "2026-08-28T16:30:53Z",
+    "nodeTestSubtests": 19,
+    "differentialCases": 4,
+    "coverage": {
+      "statements": 94.17,
+      "branches": 82.02,
+      "functions": 100,
+      "lines": 94.17,
+      "coveredSubtests": 17
+    },
+    "runtimes": ["14.15.1", "16.20.2", "18.20.8", "20.20.2", "22.22.0", "24.7.0"],
+    "packedScopedConsumer": "PASS",
+    "packedHistoricalKeyConsumer": "PASS",
+    "publint": "PASS",
+    "areTheTypesWrong": "PASS",
+    "productionAuditKnownVulnerabilities": 0,
+    "fullAuditKnownVulnerabilities": 0,
+    "registrySignaturesVerified": 183,
+    "registryAttestationsVerified": 24,
+    "remoteCi": "NOT_RUN",
+    "immutableArtifact": "NOT_BUILT"
+  },
+  "userPin": {
+    "resolved": false,
+    "resolution": "NOT_PINNED",
+    "clearRequiredNextCycle": false
+  },
+  "interruptedState": {
+    "priorOfficialBuild": false,
+    "priorPublication": false,
+    "resumeRequired": false,
+    "researchClone": "upstream/fs-write-stream-atomic"
+  },
+  "publication": {
+    "artifactBuilt": false,
+    "verdaccioPublished": false,
+    "npmPublished": false,
+    "githubRepositoryCreated": false,
+    "documentationPublished": false
+  },
+  "localDecisionRecord": "projects/fs-write-stream-atomic/UPSTREAM_AUDIT.md"
+}
