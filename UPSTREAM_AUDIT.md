@@ -179,3 +179,9 @@ Publication remains blocked unless all of the following pass:
 Any regression in complete-winner atomic visibility, terminal-event timing,
 mode/chown handling, cleanup, Windows behavior, package consumers, or supported
 runtimes blocks publication.
+
+## Canonical record
+
+This dated GO decision is recorded in canonical Drive file
+`1B1tSKaly_koV0s4qhSaxmModDOJgpId0`:
+<https://drive.google.com/file/d/1B1tSKaly_koV0s4qhSaxmModDOJgpId0/view>.
