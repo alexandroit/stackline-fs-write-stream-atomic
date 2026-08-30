@@ -5,7 +5,7 @@ const metadata = JSON.parse(await readFile(new URL('../package.json', import.met
 const decision = JSON.parse(await readFile(new URL('../decision.json', import.meta.url), 'utf8'))
 
 assert.equal(metadata.name, '@stackline/fs-write-stream-atomic')
-assert.equal(metadata.version, '1.0.0')
+assert.equal(metadata.version, '1.0.1')
 assert.equal(metadata.license, 'ISC')
 assert.equal(metadata.engines.node, '>=14.15.1')
 assert.equal(decision.decision, 'GO')

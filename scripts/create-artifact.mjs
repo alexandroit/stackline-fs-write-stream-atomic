@@ -51,8 +51,11 @@ async function createProductionSbom(metadata, archive, temporary) {
     'graceful-fs',
     'package.json'
   ), 'utf8'))
-  assert.deepEqual(installedPackage.dependencies, { 'graceful-fs': '4.2.11' })
-  assert.equal(installedGracefulFs.version, '4.2.11')
+  assert.deepEqual(installedPackage.dependencies, {
+    'graceful-fs': 'npm:@stackline/graceful-fs@1.0.0'
+  })
+  assert.equal(installedGracefulFs.name, '@stackline/graceful-fs')
+  assert.equal(installedGracefulFs.version, '1.0.0')
   assert.equal(installedGracefulFs.license, 'ISC')
 
   const productionTree = JSON.parse(run(npm, [
@@ -71,10 +74,10 @@ async function createProductionSbom(metadata, archive, temporary) {
   const targetRef = `${metadata.name}@${metadata.version}`
   const targetComponent = consumerSbom.components.find((component) => component['bom-ref'] === targetRef)
   const gracefulFsComponent = consumerSbom.components.find((component) => (
-    component.name === 'graceful-fs' && component.version === '4.2.11'
+    component.name === '@stackline/graceful-fs' && component.version === '1.0.0'
   ))
   assert.ok(targetComponent, `SBOM must contain ${targetRef}`)
-  assert.ok(gracefulFsComponent, 'SBOM must contain graceful-fs@4.2.11')
+  assert.ok(gracefulFsComponent, 'SBOM must contain @stackline/graceful-fs@1.0.0')
 
   const dependencyByRef = new Map(consumerSbom.dependencies.map((entry) => [entry.ref, entry]))
   const targetEdge = dependencyByRef.get(targetRef)
@@ -136,7 +139,7 @@ try {
   await writeFile(path.join(stage, 'inventory.json'), JSON.stringify(inventory, null, 2) + '\n')
   await writeFile(path.join(stage, 'licenses.json'), JSON.stringify({
     package: { license: 'ISC', name: metadata.name, version: metadata.version },
-    productionDependencies: [{ license: 'ISC', name: 'graceful-fs', version: '4.2.11' }]
+    productionDependencies: [{ license: 'ISC', name: '@stackline/graceful-fs', version: '1.0.0' }]
   }, null, 2) + '\n')
   await writeFile(path.join(stage, 'RELEASE_NOTES.md'), [
     `# ${metadata.name} ${metadata.version}`,

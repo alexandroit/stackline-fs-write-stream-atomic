@@ -1,9 +1,9 @@
 # Registry Handoff
 
 - upstream: `fs-write-stream-atomic@1.0.10`
-- target: `@stackline/fs-write-stream-atomic@1.0.0`
+- target: `@stackline/fs-write-stream-atomic@1.0.1`
 - decision: GO, frozen 2026-08-28
-- state: `PUBLISHED`
+- state: `BUILDING`
 - queue selection: rank 1 `CODEX_READY`
 - user pin: `NOT_PINNED`
 - runtime: Node.js `>=14.15.1`
@@ -11,7 +11,18 @@
   chown/mode/options, adjacent rename, complete-winner concurrency,
   append-as-replacement, and finish-before-close timing
 - additive: ESM and TypeScript declarations
-- production dependency: exact `graceful-fs@4.2.11`
+- production dependency: exact
+  `graceful-fs@npm:@stackline/graceful-fs@1.0.0`
+
+## Active 1.0.1 remediation
+
+Publication is blocked until the exact child release is available and separate
+fresh direct scoped and historical-key parent installs pass with no npm
+warnings, valid complete trees, zero production audit findings, exact package
+identity, preserved licenses and the expected CycloneDX edge.
+
+## Retained 1.0.0 release evidence
+
 - source/tag commit: `8a24db30a73feba4540186a5034a44ea81d3cf62`
 - main CI / CodeQL: 33191259807 / 33191259803
 - tag CI / CodeQL: 33192270974 / 33192270992
@@ -78,8 +89,8 @@ rebuild, replace, or republish version 1.0.0.
 - Closing live observation: `2026-08-28T17:18:32Z`; both contacts open with no
   maintainer response, and live duplicate searches returned only the recorded
   PR and issue.
-- Do not send an unsolicited follow-up. Respond only to a concrete maintainer
-  question with evidence.
+- Incoming maintainer messages are read-only; record them for owner review
+  without replying, acknowledging or reacting.
 
 ## Canonical Drive records
 

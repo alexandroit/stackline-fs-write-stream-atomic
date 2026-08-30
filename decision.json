@@ -321,6 +321,25 @@
     },
     "unsolicitedFollowup": false
   },
+  "dependencyRemediation": {
+    "observedAt": "2026-08-30T04:00:00Z",
+    "targetVersion": "1.0.1",
+    "state": "BUILDING",
+    "trigger": "PRODUCTION_CLOSURE_POLICY",
+    "rejectedEdge": "graceful-fs@4.2.11",
+    "replacementEdge": "graceful-fs@npm:@stackline/graceful-fs@1.0.0",
+    "resolutionOrder": [
+      "@stackline/graceful-fs@1.0.0",
+      "@stackline/fs-write-stream-atomic@1.0.1"
+    ],
+    "compatibility": "HISTORICAL_DEPENDENCY_KEY_AND_PUBLIC_API_PRESERVED",
+    "publication": {
+      "artifactBuilt": false,
+      "verdaccioPublished": false,
+      "npmPublished": false,
+      "documentationPublished": false
+    }
+  },
   "canonicalDrive": {
     "decisionId": "1B1tSKaly_koV0s4qhSaxmModDOJgpId0",
     "decisionUrl": "https://drive.google.com/file/d/1B1tSKaly_koV0s4qhSaxmModDOJgpId0/view",

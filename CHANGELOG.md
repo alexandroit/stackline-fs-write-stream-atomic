@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.1 - 2026-08-30
+
+- Replace the stale direct `graceful-fs@4.2.11` edge with the exact
+  `graceful-fs@npm:@stackline/graceful-fs@1.0.0` compatibility alias.
+- Preserve the historical internal import key while using the maintained,
+  dependency-free Stackline provider.
+- Add separate direct scoped and historical-key closure gates covering npm
+  warnings, complete trees, production audits, installed identity, runtime
+  loading, license inventory and the CycloneDX edge.
+
 ## 1.0.0 - 2026-08-28
 
 - Preserve the callable/newable CommonJS Writable contract of

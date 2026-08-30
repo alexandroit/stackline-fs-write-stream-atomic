@@ -1,6 +1,6 @@
 {
   "name": "@stackline/fs-write-stream-atomic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Compatibility-first atomic filesystem Writable streams with maintained lifecycle handling and first-party types",
   "type": "commonjs",
   "sideEffects": false,
@@ -70,6 +70,7 @@
     "test": "npm run test:upstream && npm run test:differential && npm run test:contract && npm run test:stress && npm run test:esm && npm run test:types && npm run test:runtime",
     "test:coverage": "c8 --all --include=index.js --check-coverage --lines 85 --functions 85 --branches 75 node --test test/upstream.test.cjs test/contract.test.cjs test/error-cleanup.test.cjs test/windows-eperm.test.cjs test/stress.test.cjs",
     "test:smoke": "node scripts/smoke-install.mjs",
+    "test:closure": "node scripts/check-production-closure.mjs",
     "check:package": "publint && attw --pack .",
     "check:licenses": "node scripts/check-licenses.mjs",
     "check:release": "node scripts/check-release-metadata.mjs",
@@ -78,7 +79,7 @@
     "audit:dependencies": "npm audit --omit=dev --audit-level=low",
     "audit:all": "npm audit --audit-level=low",
     "audit:signatures": "npm audit signatures",
-    "verify": "npm run clean && npm run lint && npm run build && npm test && npm run test:coverage && npm run test:smoke && npm run check:package && npm run check:release && npm run pack:check && npm run check:licenses && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
+    "verify": "npm run clean && npm run lint && npm run build && npm test && npm run test:coverage && npm run test:smoke && npm run test:closure && npm run check:package && npm run check:release && npm run pack:check && npm run check:licenses && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
     "prepack": "npm run build"
   },
   "engines": {
@@ -99,7 +100,7 @@
   "author": "Stackline Maintainers",
   "license": "ISC",
   "dependencies": {
-    "graceful-fs": "4.2.11"
+    "graceful-fs": "npm:@stackline/graceful-fs@1.0.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",

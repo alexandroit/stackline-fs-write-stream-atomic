@@ -1,6 +1,18 @@
 # Verification
 
-Observed 2026-08-28 in the local package workspace.
+Observed through 2026-08-30 in the local package workspace.
+
+## 1.0.1 dependency remediation
+
+- The manifest preserves the `graceful-fs` runtime key through the exact
+  `npm:@stackline/graceful-fs@1.0.0` alias.
+- Separate fresh direct scoped and historical-key parent consumers now gate
+  npm warning output, the complete production tree, production audit, runtime
+  loading, lockfile shape and exact child identity.
+- License and CycloneDX gates require the maintained child and preserved ISC
+  attribution.
+- Final local, hosted, Verdaccio and official-registry evidence remains pending
+  until the child package has propagated through the official registry.
 
 ## Required gates
 
@@ -17,7 +29,7 @@ Observed 2026-08-28 in the local package workspace.
 - CI design for exact Node 14.15.1, maintained Node releases, Windows, and
   macOS.
 
-## 2026-08-28 local gate
+## Retained 1.0.0 local gate
 
 `npm run verify` completed successfully at 2026-08-28T16:37:38Z:
 
@@ -41,9 +53,9 @@ Observed 2026-08-28 in the local package workspace.
 - `publint` reported all good. Are the Types Wrong reported no problems for
   root, `index`, `index.js`, and `package.json` under Node 10/16 and bundler
   resolution profiles.
-- The dry-run inventory contains 16 files, approximately 8.6 kB packed and
-  26.1 kB unpacked. The production license gate contains only exact
-  `graceful-fs@4.2.11` under the ISC root.
+- The 1.0.0 dry-run inventory contains 16 files, approximately 8.6 kB packed
+  and 26.1 kB unpacked. Its production license gate contained only exact
+  `graceful-fs@4.2.11` under the ISC root; that edge is not accepted for 1.0.1.
 - Production and full npm audits found zero known vulnerabilities. All 183
   installed registry packages had verified signatures; 24 had attestations.
 

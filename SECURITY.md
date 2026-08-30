@@ -10,6 +10,15 @@ order, and impact.
 
 The latest `1.x` line targets Node.js 14.15.1 and newer.
 
+## Production dependency
+
+The sole production edge is exact-pinned as
+`graceful-fs@npm:@stackline/graceful-fs@1.0.0`. The alias preserves the
+historical internal import while resolving to the maintained, dependency-free
+ISC provider. Release gates require separate clean scoped and historical-key
+installs, no npm warnings, a valid complete tree, zero production audit
+findings, exact package identity, license inventory and SBOM linkage.
+
 ## Filesystem boundary
 
 The caller chooses the target path and must enforce its own allowed root,

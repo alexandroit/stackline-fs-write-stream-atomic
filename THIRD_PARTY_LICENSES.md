@@ -14,8 +14,9 @@ independent-project attribution is recorded in [NOTICE](./NOTICE).
 
 | Package | Version | License | Purpose | Source |
 | --- | --- | --- | --- | --- |
-| `graceful-fs` | 4.2.11 | ISC | Filesystem compatibility and graceful descriptor handling | <https://github.com/isaacs/node-graceful-fs> |
+| `@stackline/graceful-fs` | 1.0.0 | ISC | Filesystem compatibility and graceful descriptor handling, installed under the historical `graceful-fs` key | <https://github.com/alexandroit/stackline-graceful-fs> |
 
-`graceful-fs` ships its full ISC license in its package. Development and
-type-checking dependencies are excluded from the production graph and npm
-artifact; they retain the licenses installed with those tools.
+`@stackline/graceful-fs` preserves the complete upstream ISC attribution and
+ships its full license in the package. Development and type-checking
+dependencies are excluded from the production graph and npm artifact; they
+retain the licenses installed with those tools.

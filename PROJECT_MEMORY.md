@@ -2,9 +2,9 @@
 schema: stackline-project-memory-v1
 package: fs-write-stream-atomic
 target: "@stackline/fs-write-stream-atomic"
-version: 1.0.0
-state: PUBLISHED
-updated: 2026-08-28
+version: 1.0.1
+state: BUILDING
+updated: 2026-08-30
 ---
 
 # Project Memory
@@ -23,7 +23,15 @@ rename, Windows EPERM comparison, and successful `open -> finish -> close`
 timing. Append flags remain replacement semantics. Add ESM/types without a
 browser or crash-durability claim.
 
-## Published state
+## Active dependency remediation
+
+Version 1.0.1 replaces `graceful-fs@4.2.11` with the exact historical-key
+alias `graceful-fs@npm:@stackline/graceful-fs@1.0.0`. The runtime import and
+public API remain unchanged. Release requires separate clean direct and alias
+consumers with no npm warnings, valid full production trees, zero audit
+findings, exact child identity, preserved ISC evidence and SBOM linkage.
+
+## Retained 1.0.0 published state
 
 The complete local source/package gate passed at 2026-08-28T16:37:38Z. It
 covers the immutable 1.0.10 differential, 19 Node test subtests, slow-close and
@@ -59,11 +67,10 @@ The API reports `immutable: true` and exact asset digests, and the downloaded
 tarball matches the accepted hash. The installed `gh` CLI has no attestation
 command, so the record relies on those API and byte-verification results.
 
-The accepted SBOM contains the root edge to exact `graceful-fs@4.2.11`. Future
-artifact generation now derives the CycloneDX production closure from an
-isolated packed consumer and asserts that runtime edge, version, license, and
-clean production tree. This post-release script correction does not change the
-current release-candidate or published bytes.
+The accepted 1.0.0 SBOM contains the root edge to exact
+`graceful-fs@4.2.11`. Version 1.0.1 supersedes that edge. Artifact generation
+derives the CycloneDX production closure from an isolated packed consumer and
+asserts the replacement identity, version, license and clean production tree.
 
 ## Adoption coverage
 
@@ -86,14 +93,21 @@ TypeScript 6 shape passed. The open issue has zero comments, discloses
 independent Stackline maintainership, offers neutral choices, and makes no
 security claim.
 
-The different-repository check passes and adoption coverage is complete. Do
-not follow up unsolicited; respond only to a concrete maintainer question with
-evidence.
+The different-repository check passes and adoption coverage is complete.
+Incoming maintainer messages are read-only; record them for owner review
+without replying, acknowledging or reacting.
 
 The closing live reconciliation at 2026-08-28T17:18:32Z found both contacts
 open with no maintainer response. Selene remained mergeable and blocked only
 on workflow approval with zero instantiated jobs; live duplicate searches
 returned only the recorded PR and issue.
+
+ElectronMail's owner responded positively but deferred evaluation at
+2026-08-29T11:47:08Z and asked how Stackline packages are selected. The single
+automated reply created at 2026-08-29T13:09:52Z was deleted by the owner. The
+issue remains open and the question is intentionally unanswered. Effective
+2026-08-29T16:34:03Z, incoming maintainer messages are read-only and must be
+recorded for owner review without replying, acknowledging or reacting.
 
 ## Documentation record
 
