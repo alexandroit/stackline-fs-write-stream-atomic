@@ -73,9 +73,10 @@ async function createProductionSbom(metadata, archive, temporary) {
   ], { cwd: consumer }))
   const targetRef = `${metadata.name}@${metadata.version}`
   const targetComponent = consumerSbom.components.find((component) => component['bom-ref'] === targetRef)
-  const gracefulFsComponent = consumerSbom.components.find((component) => (
-    component.name === '@stackline/graceful-fs' && component.version === '1.0.0'
-  ))
+  // npm 10 reports an alias under its dependency key, while npm 11 reports
+  // the published name. CycloneDX bom-ref preserves the canonical identity.
+  const gracefulFsComponent = consumerSbom.components.find((component) =>
+    component['bom-ref'] === '@stackline/graceful-fs@1.0.0')
   assert.ok(targetComponent, `SBOM must contain ${targetRef}`)
   assert.ok(gracefulFsComponent, 'SBOM must contain @stackline/graceful-fs@1.0.0')
 
