@@ -23,8 +23,9 @@ and Windows replacement behavior.
 - `destroy()` and errors forwarded through `pipeline()` remove temporary files.
 - Append flags still replace the target with the newly streamed value; they do
   not append to the old target.
-- The production graph retains exact `graceful-fs@4.2.11` and removes `iferr`,
-  `imurmurhash`, and `readable-stream`.
+- The production graph retains the historical `graceful-fs` key through exact
+  `npm:@stackline/graceful-fs@1.0.0` and removes `iferr`, `imurmurhash`, and
+  `readable-stream`.
 - The public path declaration is deliberately string-only, matching upstream
   documentation. Do not infer URL or Buffer support from modern `fs` APIs.
 
