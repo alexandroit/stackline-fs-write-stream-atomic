@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict'
 import crypto from 'node:crypto'
 import { execFileSync } from 'node:child_process'
-import { mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
+import {
+  chmod,
+  copyFile,
+  mkdtemp,
+  mkdir,
+  readFile,
+  rename,
+  rm,
+  writeFile
+} from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -111,14 +120,30 @@ run(npm, ['run', 'verify'], { stdio: 'inherit' })
 // Stage beside the destination so the final rename cannot cross filesystems.
 const temporary = await mkdtemp(path.join(root, '.artifact-stage-'))
 const stage = path.join(temporary, 'release-candidate')
+const source = path.join(temporary, 'source')
 await mkdir(stage)
+await mkdir(source)
 
 try {
-  const output = run(npm, ['pack', '--silent', '--json', '--ignore-scripts', '--pack-destination', stage]).trim()
+  // npm preserves file modes in the tar stream. Build from committed files
+  // with normalized modes so restrictive local umasks match clean CI clones.
+  const trackedFiles = run('git', ['ls-files', '-z']).split('\0').filter(Boolean)
+  for (const file of trackedFiles) {
+    const target = path.join(source, file)
+    await mkdir(path.dirname(target), { recursive: true })
+    await copyFile(path.join(root, file), target)
+    await chmod(target, 0o644)
+  }
+
+  const output = run(npm, [
+    'pack', '--silent', '--json', '--ignore-scripts', '--pack-destination', stage
+  ], { cwd: source }).trim()
   const start = output.lastIndexOf('\n[')
   const packed = JSON.parse(start === -1 ? output : output.slice(start + 1))
   assert.equal(packed.length, 1)
   const record = packed[0]
+  assert.ok(record.files.every(({ mode }) => mode === 0o644),
+    'every shipped regular file must have mode 0644')
   const archive = path.join(stage, record.filename)
   const bytes = await readFile(archive)
   const digests = Object.fromEntries(['sha1', 'sha256', 'sha512'].map((algorithm) => [
