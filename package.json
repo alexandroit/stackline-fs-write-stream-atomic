@@ -1,6 +1,6 @@
 {
   "name": "@stackline/fs-write-stream-atomic",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Compatibility-first atomic filesystem Writable streams with maintained lifecycle handling and first-party types",
   "type": "commonjs",
   "sideEffects": false,
