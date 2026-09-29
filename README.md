@@ -1,17 +1,18 @@
 # @stackline/fs-write-stream-atomic
 
-> Compatibility-first atomic filesystem Writable streams with maintained lifecycle handling and first-party types
+> Compatibility-first atomic filesystem Writable streams with maintained lifecycle handling and first-party types.
 
 [![npm version](https://img.shields.io/npm/v/@stackline/fs-write-stream-atomic.svg?style=flat-square)](https://www.npmjs.com/package/@stackline/fs-write-stream-atomic)
-[![license](https://img.shields.io/npm/l/@stackline/fs-write-stream-atomic.svg?style=flat-square)](https://github.com/alexandroit/stackline-fs-write-stream-atomic/blob/main/LICENSE)
-[![GitHub repository](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-fs-write-stream-atomic)
+[![license](https://img.shields.io/npm/l/@stackline/fs-write-stream-atomic.svg?style=flat-square)](https://github.com/alexandroit/stackline-fs-write-stream-atomic)
+[![GitHub repository](https://img.shields.io/badge/GitHub-alexandroit%2Fstackline-fs-write-stream-atomic-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-fs-write-stream-atomic)
+[![Docs](https://img.shields.io/badge/docs-alexandro.net-0f766e?style=flat-square)](https://alexandro.net/docs/vanilla/fs-write-stream-atomic/)
+[![Reddit community](https://img.shields.io/badge/community-r%2FStackline-ff4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/r/Stackline/)
 
-**[Documentation](https://alexandro.net/docs/vanilla/fs-write-stream-atomic/)** |
-**[npm](https://www.npmjs.com/package/@stackline/fs-write-stream-atomic)** |
-**[Issues](https://github.com/alexandroit/stackline-fs-write-stream-atomic/issues)** |
-**[Repository](https://github.com/alexandroit/stackline-fs-write-stream-atomic)**
+**[Documentation](https://alexandro.net/docs/vanilla/fs-write-stream-atomic/)** | **[npm](https://www.npmjs.com/package/@stackline/fs-write-stream-atomic)** | **[Issues](https://github.com/alexandroit/stackline-fs-write-stream-atomic/issues)** | **[Repository](https://github.com/alexandroit/stackline-fs-write-stream-atomic)**
 
-**Package version:** `1.0.2`
+**Current package version:** `1.0.3`
+
+---
 
 ## Why this package?
 
@@ -24,7 +25,7 @@ temporary stream has closed successfully.
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/fs-write-stream-atomic@1.0.2` |
+| Package | `@stackline/fs-write-stream-atomic@1.0.3` |
 | Node.js runtime | `>=14.15.1` |
 | CommonJS / primary entry | `./index.js` |
 | ES module entry | `./index.mjs` |
@@ -148,17 +149,26 @@ npm run test:smoke
 
 Run `npm run verify` and inspect the package contents before release. Publish a new version through the [GitHub Actions publishing workflow](https://github.com/alexandroit/stackline-fs-write-stream-atomic/actions/workflows/publish.yml), using the SHA-512 digest of the reviewed tarball. Verify the exact published version, tarball integrity, and npm provenance after the run.
 
-## Community and Support
-
-Report reproducible package issues in the [issue tracker](https://github.com/alexandroit/stackline-fs-write-stream-atomic/issues). Use the [security policy](https://github.com/alexandroit/stackline-fs-write-stream-atomic/blob/main/SECURITY.md) for vulnerability reports.
-
-- [Stackline / Alexandro.Net](https://alexandro.net/)
-- [GitHub](https://github.com/alexandroit)
-- [Maintainer LinkedIn](https://www.linkedin.com/in/aleinfo/)
-- [Reddit community: r/Stackline](https://www.reddit.com/r/Stackline/)
-
 ## License
 
 ISC. See [the license](https://github.com/alexandroit/stackline-fs-write-stream-atomic/blob/main/LICENSE) for the complete terms.
 
 Original authorship and third-party attribution are preserved in [NOTICE](https://github.com/alexandroit/stackline-fs-write-stream-atomic/blob/main/NOTICE).
+
+## Credits and original authors
+
+- Stackline Maintainers.
+- Copyright (c) 2026 Stackline Maintainers.
+- Stackline maintenance: [Alexandro Paixao Marques](https://www.linkedin.com/in/aleinfo/) and [Stackline contributors](https://github.com/alexandroit).
+
+Original copyright, license notices and contributor acknowledgements remain part of this distribution. Stackline maintenance does not replace authorship of the original work.
+
+## Community and Links
+
+- [Stackline website](https://alexandro.net/)
+- [GitHub projects](https://github.com/alexandroit)
+- [npm packages](https://www.npmjs.com/~alex360qc)
+- [Reddit community — r/Stackline](https://www.reddit.com/r/Stackline/)
+- [Maintainer LinkedIn](https://www.linkedin.com/in/aleinfo/)
+
+Use this repository's issue tracker for reproducible bugs and feature requests. Join r/Stackline for examples, usage questions and release discussions.
