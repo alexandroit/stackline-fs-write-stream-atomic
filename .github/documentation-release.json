@@ -1,0 +1,30 @@
+{
+  "repository": "alexandroit/stackline-fs-write-stream-atomic",
+  "packages": [
+    {
+      "name": "@stackline/fs-write-stream-atomic",
+      "path": "README.md",
+      "version": "1.0.3",
+      "baselineVersion": "1.0.2",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "fs-write-stream-atomic",
+        "streams",
+        "typescript",
+        "nodejs",
+        "atomic",
+        "filesystem",
+        "stream",
+        "writable",
+        "writable-stream",
+        "atomic-write"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/fs-write-stream-atomic/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/fs-write-stream-atomic/-/fs-write-stream-atomic-1.0.2.tgz",
+      "baselineIntegrity": "sha512-nGRpIZWXEIDUymYf1BavF5VP6x3xcobKnMC8pZKqv3ytcQTD+K8ai6t/z1kbx9UHNlnCCPrxHHJJ45lK61/lZg==",
+      "expectedSha512": "df3bcf9583a635e25bc33575db76c7cb7c2a914d4dc5eb6c1121f4ceab25b1de77f2acaa6f4fe995f4c7e5197875337bd2572cfd86fb72062d287cb9286d136a",
+      "tag": "docs-stackline-fs-write-stream-atomic-v1.0.3"
+    }
+  ]
+}
