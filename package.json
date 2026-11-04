@@ -120,9 +120,9 @@
     "@eslint/js": "10.0.1",
     "@types/node": "14.18.63",
     "c8": "12.0.0",
-    "eslint": "10.9.1",
+    "eslint": "10.14.0",
     "fs-write-stream-atomic-upstream": "npm:fs-write-stream-atomic@1.0.10",
-    "publint": "0.3.24",
+    "publint": "0.3.25",
     "typescript": "7.0.2",
     "typescript-3-9": "npm:typescript@3.9.10"
   }
